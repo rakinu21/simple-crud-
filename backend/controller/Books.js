@@ -26,6 +26,31 @@ export const createBook = async(req , res)=>{
     }
 }
 
+export const singlePost = async (req , res) =>{
+
+    try {
+        const {id} = req.params;
+
+        const [data] = await db.query('SELECT * FROM books WHERE id = ? ', [id]);
+
+        return res.status(201).json(data)
+    } catch (error) {
+       res.status(500).json({message:error.message})
+    }
+}
 
 
+export const update = async(req, res) =>{
+
+    try {
+        const {id} = req.params;
+        const {title , description} = req.body;
+
+        const [data] = await db.query('UPDATE books SET title =? , description =? WHERE id = ?', [title, description, id]);
+
+        return res.status(201).json(data);
+    } catch (error) {
+         res.status(500).json({message:error.message})
+    }
+}
 
