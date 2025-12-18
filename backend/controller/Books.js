@@ -4,7 +4,7 @@ import { db } from "../config/db.js";
 export const getAllBooks = async(req, res)=>{
 
     try {
-         const [booksdataAll] =  await db.query('SELECT * FROM books');
+         const [booksdataAll] =  await db.query('SELECT * FROM books ORDER BY created_at DESC');
          res.status(201).json(booksdataAll);
 
     } catch (error) {

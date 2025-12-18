@@ -6,3 +6,9 @@ export const getAllBooks = async()=>{
 
     return res.data;
 }
+
+export const addBooks = async(data) =>{
+    
+    const res = await api.post('/book',data);
+    return res.data;
+}
