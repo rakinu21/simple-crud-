@@ -54,3 +54,17 @@ export const update = async(req, res) =>{
     }
 }
 
+
+
+export const DeleteBook = async(req, res) =>{
+
+    try {
+        const {id} = req.params;
+
+        const [data] = await db.query('DELETE FROM  books WHERE id = ?',[id]);
+        return res.status(201).json({message:"item deleted sucessfully"})
+    } catch (error) {
+         res.status(500).json({message:error.message})
+    }
+}
+
