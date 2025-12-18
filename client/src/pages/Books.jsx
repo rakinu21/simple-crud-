@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import { getAllBooks } from '../api/books.js';
+import { DeletePost, getAllBooks } from '../api/books.js';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Books.scss'
 
 export const Books = () => {
@@ -23,6 +23,16 @@ export const Books = () => {
     
         handleBooks()
     },[])
+
+    const handleDelete = async(id)=>{
+
+           try {
+             const res = await DeletePost(id);
+             window.location.reload()
+         } catch (error) {
+             console.log(error)
+         }
+    }
   return (
     <div className='books'>
 
@@ -34,11 +44,11 @@ export const Books = () => {
         books.map((booksItem, index) =>{
 
             return (
-                <div className="container">
+                <div className="container" key={booksItem.id}>
                      <h1>{booksItem.title} 
                       <div className="button">
-                        <button className="delete">Delete</button>
-                        <button className="edit">edit</button>
+                        <button className="delete"onClick={()=> handleDelete(booksItem.id)}>Delete</button>
+                        <button className="edit"><Link to={`/book/${booksItem.id}`}>Edit</Link></button>
                       </div>
                     
                     </h1>
@@ -47,7 +57,10 @@ export const Books = () => {
             )
         })
         
-        : <p>no data found</p>
+        : <p>no data found
+
+         
+        </p>
         }
     </div>
   )
